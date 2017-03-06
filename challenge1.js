@@ -8,10 +8,9 @@ var nDays;
 var kWindowDays;
 var minDays = 1;
 var maxDays = 200000;
-
-
-
 var fileData;
+var fileDataLineOne;
+var fileDataLineTwo;
 
 fs.readFile('./input.txt', "utf-8", function read(err, data) {
     if (err) {
@@ -20,12 +19,73 @@ fs.readFile('./input.txt', "utf-8", function read(err, data) {
     fileData = data.split("\r\n");
     fileDataLineOne = fileData[0].split(" ");
     fileDataLineTwo = fileData[1].split(" ");
+    nDays = fileDataLineOne[0];
+    kWindowDays = Number(fileDataLineOne[1]);
+
 
     console.log("fileData: ", fileData); 
     console.log("fileDataLineOne: ", fileDataLineOne);
     console.log("fileDataLineTwo: ", fileDataLineTwo);
+    console.log("nDays", nDays);
+    console.log("kWindowDays", kWindowDays);
+    checkWindowDifference();
 });
+//need to create a slice of linetwo for it to check against so that it doesn't go 
+//beyond the limits of the k days. It checks for consequitive, so it will 
+//be looking for [1, 2, 3], [1,2], and [2,3] to equal 3. It will not compare [3,4]
+function checkWindowDifference(){
+    console.log("line two", fileDataLineTwo)
+    var countArray = [];
+    var count = 0;
+    var kCount = 0;
+    console.log("kWindowDays",kWindowDays)
+    for(var j = 0; j < kWindowDays; j++){
+        kCount++    
+        var parseEnd = (j + kWindowDays);
+        var continued = false;
+        var continueStreak = 1
+        console.log("parseEnd", parseEnd)
+        console.log("j is ", j)
+        var parsedLine = fileDataLineTwo.slice(j, (j+kWindowDays+1))
+        for(var i = j; i < kWindowDays; i++){
+            console.log(" ");
+            console.log("average", parsedLine[i])
+            console.log("compared average is ", parsedLine[i+1])
+            console.log("kCount", kCount);
+            console.log("count", count);
+            console.log("continued", continued)
+            if( i == nDays ){
+                console.log("Nope. Stop here.")
+            }
+            else{
+                if(parsedLine[i] < parsedLine[i+1] ){
+                count++
+                console.log("count has increased! The count is now ", count)
+                if(continued === true){
+                    continueStreak++
+                }
+                continued = true
+                }
+                else if(parsedLine[i] > parsedLine[i+1] ){
+                    count--
+                    console.log("count has decreased! The count is now ", count)
+                    continued = false
+                }
+                else {
+                    console.log("count has remained the same! The count is now ", count)
+                    continued = false
+                }
+            }
+        }
+        countArray.push(count);
+        count = 0
+        console.log("The current countArray is: ", countArray)
+    }
+}
 
+function display (difference){
+    console.log(difference + "\n")
+}
 
 
 
