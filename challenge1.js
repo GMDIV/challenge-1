@@ -67,19 +67,35 @@ function checkWindowDifference(){
                 console.log("count has increased! The count is now ", count)
                 if(continued === true){
                     continueStreak++
+                    console.log("continueStreak", continueStreak)
                 }
                 continued = true
+                console.log("continueStreak", continueStreak)
                 }
                 else if(parsedLine[i] > parsedLine[i+1] ){
                     count--
                     console.log("count has decreased! The count is now ", count)
                     continued = false
+
+                    console.log("continueStreak", continueStreak)
+                    if(continueStreak > 1){
+                        count++
+                    }
+                    countinueStreak = 1
                 }
                 else {
                     console.log("count has remained the same! The count is now ", count)
                     continued = false
+                    if(continueStreak > 1){
+                        count++
+                    }
+                    countinueStreak = 1
+                    console.log("continueStreak", continueStreak)
                 }
             }
+        }
+        if(continueStreak > 1){
+            count++
         }
         countArray.push(count);
         count = 0
