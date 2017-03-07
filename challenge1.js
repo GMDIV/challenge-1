@@ -46,9 +46,13 @@ function checkWindowDifference(){
         var continueStreak = 1
         console.log("parseEnd", parseEnd)
         console.log("j is ", j)
-        var parsedLine = fileDataLineTwo.slice(j, (j+kWindowDays+1))
-        for(var i = j; i < kWindowDays; i++){
+        var parsedLine = fileDataLineTwo.slice(j, (j+kWindowDays))
+
+        for(var i = 0; i < kWindowDays-1; i++){
+
             console.log(" ");
+            console.log("parsedLine", parsedLine)
+            console.log("i", i)
             console.log("average", parsedLine[i])
             console.log("compared average is ", parsedLine[i+1])
             console.log("kCount", kCount);
